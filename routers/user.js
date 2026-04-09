@@ -5,7 +5,7 @@ const { verifyToken } = require("../middleware/auth");
 const bcrypt = require("bcryptjs");
 
 // User login
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -63,12 +63,12 @@ router.post("/logout", verifyToken, async (req, res) => {
 });
 
 // Get user profile
-router.get("/me", verifyToken, async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   res.send(req.user);
 });
 
 // Get user whitelist
-router.get("/me/whitelists", verifyToken, async (req, res) => {
+router.get("/whitelists", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     const whitelistUsers = await Promise.all(
@@ -81,7 +81,7 @@ router.get("/me/whitelists", verifyToken, async (req, res) => {
           email: u.email,
           picture: u.picture,
         };
-      })
+      }),
     );
     res.send(whitelistUsers);
   } catch (error) {
@@ -91,7 +91,7 @@ router.get("/me/whitelists", verifyToken, async (req, res) => {
 });
 
 // Update whitelist (toggle add/remove)
-router.patch("/me/:whitelistId", verifyToken, async (req, res) => {
+router.patch("/:whitelistId", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     const target = await User.findById(req.params.whitelistId);
@@ -101,10 +101,10 @@ router.patch("/me/:whitelistId", verifyToken, async (req, res) => {
 
     if (alreadyAdded) {
       user.whitelist = user.whitelist.filter(
-        (id) => id.toString() !== target._id.toString()
+        (id) => id.toString() !== target._id.toString(),
       );
       target.whitelist = target.whitelist.filter(
-        (id) => id.toString() !== user._id.toString()
+        (id) => id.toString() !== user._id.toString(),
       );
     } else {
       user.whitelist.push(target._id);
@@ -124,7 +124,7 @@ router.patch("/me/:whitelistId", verifyToken, async (req, res) => {
           email: u.email,
           picture: u.picture,
         };
-      })
+      }),
     );
 
     res.send(updatedWhitelist);
