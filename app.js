@@ -56,12 +56,12 @@ const upload = multer({
 app.get("/", (req, res) => {
   res.send("Hello World welcome to my first express app");
 });
-app.post("/api/upload", upload.single("picture"), register);
+app.post("/api/register", upload.single("picture"), register);
 app.post(
   "/api/property/upload",
   verifyToken,
   upload.array("pictures", 8),
-  uploadProperty
+  uploadProperty,
 );
 app.use("/api/user", userRouter);
 app.use("/api/property", propertyRouter);
