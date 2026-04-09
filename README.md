@@ -31,13 +31,18 @@ npm start
 ## API Endpoints
 ### User
 
-- POST /api/register || /api/upload (User signup/registration with user authentication and profile picture upload to cloudinary)
-- POST /api/user/login || /api/user/
+- POST /api/register (User signup/registration with user authentication and profile picture upload to cloudinary)
+- POST /api/user/login 
 - POST /api/user/logout 
-- GET /api/user/ || api/user/me (View user profile)
-- GET /api/user/whitelists || /api/user/me/whitelists
+- GET /api/user/ (View user profile)
+- GET /api/user/whitelists (View users whitelisted by loggedIn user)
 
-### /Properties
+### Properties
 
-GET /api/properties
-POST /api/properties
+- GET /api/property (fetches all available properties)
+- POST /api/property
+- GET api/property/myproperty (get properties by userId)
+- GET api/property/:id (get property with it's ID)
+- PUT api/property/:id (add/remove property from wishlist)
+- PUT api/property/update/:id (Update a property by ID)
+- DELETE api/property/:id (Delete a property by ID
